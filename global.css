@@ -1,0 +1,127 @@
+/* ===========================
+   RESET BÁSICO
+=========================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: sans-serif;
+  background: #f0f0f0;
+  padding: 20px;
+}
+
+.titulo {
+  margin: 30px 0 10px;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+/* ===========================
+   LAYOUT 1 - FIXTURE SA
+   Desktop: Grid 3 columnas, 2 filas
+=========================== */
+.layout1 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 4px;
+}
+
+/* A ocupa 1 col, B ocupa 2 cols */
+.layout1 .a        { grid-column: 1 / 2; }
+.layout1 .b        { grid-column: 2 / 4; }
+
+/* cd-wrapper ocupa las 3 cols y muestra C y D como grid interno */
+.layout1 .cd-wrapper {
+  grid-column: 1 / 3;   /* C y D juntos ocupan 2 cols */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+}
+
+.layout1 .e        { grid-column: 3 / 4; }
+
+/* Celdas layout 1: sin fondo, solo borde */
+.layout1 .celda,
+.layout1 .cd-wrapper .celda {
+  background: transparent;
+  border: 2px solid #999;
+  color: #333;
+  padding: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+
+/* ===========================
+   LAYOUT 2 - SEMÁNTICO
+   Desktop: Grid con areas
+=========================== */
+.layout2 {
+  display: grid;
+  grid-template-columns: 120px 1fr 120px;
+  grid-template-areas:
+    "header  header  header"
+    "nav     article aside"
+    "footer  footer  footer";
+  gap: 4px;
+}
+
+.layout2 .celda {
+  background: #5b9bd5;
+  color: white;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+.layout2 .header  { grid-area: header; }
+.layout2 .nav     { grid-area: nav; }
+.layout2 .article { grid-area: article; background: #a0a0a0; }
+.layout2 .aside   { grid-area: aside; }
+.layout2 .footer  { grid-area: footer; }
+
+/* ===========================
+   RESPONSIVE - MÓVIL (flex)
+=========================== */
+@media (max-width: 600px) {
+
+  /* Layout 1 móvil: flex columna → B, [C D], E */
+  .layout1 {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  /* Ocultar A */
+  .layout1 .a { display: none; }
+
+  /* cd-wrapper: flex row para que C y D queden lado a lado */
+  .layout1 .cd-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+  }
+
+  .layout1 .cd-wrapper .celda {
+    flex: 1;
+  }
+
+  /* Layout 2 móvil: flex columna reordenada */
+  .layout2 {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .layout2 .header  { order: 1; }
+  .layout2 .article { order: 2; }
+  .layout2 .nav     { order: 3; }
+  .layout2 .aside   { order: 4; }
+  .layout2 .footer  { order: 5; }
+}
